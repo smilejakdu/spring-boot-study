@@ -1,2 +1,3 @@
-package com.example.demo.controller;public class DeleteController {
+package com.example.demo.controller;
+public class DeleteController {
 }

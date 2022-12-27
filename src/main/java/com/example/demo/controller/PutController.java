@@ -1,2 +1,3 @@
-package com.example.demo.controller;public class PutController {
+package com.example.demo.controller;
+public class PutController {
 }
