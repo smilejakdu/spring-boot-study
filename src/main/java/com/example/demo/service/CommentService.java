@@ -15,12 +15,11 @@ public class CommentService {
     @Transactional
     public CommentRequestDto createComment(CommentRequestDto request) {
         Comment comment = new Comment();
-        comment.setComment(request.getComment());
+        comment.setContent(request.getContent());
         Comment saved = commentRepository.save(comment);
 
         CommentRequestDto dto = new CommentRequestDto();
-        dto.setId(saved.getId());
-        dto.setComment(saved.getComment());
+        dto.setContent(saved.getContent());
 
         return dto;
     }
