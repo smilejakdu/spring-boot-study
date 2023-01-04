@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.controller.userController.CreateUserRequest;
-import com.example.demo.controller.userController.UserDto;
+import com.example.demo.controller.userController.dto.UserRequestDto;
 import com.example.demo.entities.User;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +14,12 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public UserDto createUser(CreateUserRequest request) {
+    public UserRequestDto createUser(CreateUserRequest request) {
         User user = new User();
         user.setName(request.getName());
         User saved = userRepository.save(user);
 
-        UserDto dto = new UserDto();
+        UserRequestDto dto = new UserRequestDto();
         dto.setId(saved.getId());
         dto.setName(saved.getName());
 

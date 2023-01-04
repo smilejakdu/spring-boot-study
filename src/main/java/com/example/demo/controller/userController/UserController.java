@@ -1,5 +1,6 @@
 package com.example.demo.controller.userController;
 
+import com.example.demo.controller.userController.dto.UserRequestDto;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/create")
-    public UserDto createUser(@RequestBody CreateUserRequest request) {
+    public UserRequestDto createUser(@RequestBody CreateUserRequest request) {
         return userService.createUser(request);
     }
 }

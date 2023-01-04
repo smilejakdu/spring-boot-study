@@ -1,4 +1,4 @@
-package com.example.demo.controller.userController;
+package com.example.demo.shared;
 
 import lombok.Data;
 

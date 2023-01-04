@@ -1,5 +1,6 @@
 package com.example.demo.controller.userController;
 
+import com.example.demo.shared.CheckValidity;
 import lombok.Data;
 
 @Data
