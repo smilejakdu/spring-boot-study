@@ -6,12 +6,12 @@ import lombok.Data;
 @Data
 public class GetUserRequestDto implements CheckValidity {
 
-    private String name;
+    private String email;
 
     @Override
     public void check() {
-        if(name == null || name.isEmpty()) {
-            throw new RuntimeException("Name is empty");
+        if(email == null || email.isEmpty()) {
+            throw new RuntimeException("Email is empty");
         }
     }
 }

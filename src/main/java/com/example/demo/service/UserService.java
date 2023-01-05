@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.controller.userController.dto.CreateUserDto.CreateUserRequestDto;
 import com.example.demo.controller.userController.dto.CreateUserDto.CreateUserResponseDto;
+import com.example.demo.controller.userController.dto.LoginUserDto.LoginUserRequestDto;
 import com.example.demo.entities.User;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,6 @@ public class UserService {
 
     @Transactional
     public CreateUserResponseDto createUser(CreateUserRequestDto request) {
-//      유저를 찾는다. 없다면 에러를 뱉는다.
         User user = userRepository.findByEmail(request.getEmail());
         if (user != null) {
             throw new RuntimeException("이미 가입되어있는 유저 입니다.");
@@ -36,6 +36,20 @@ public class UserService {
         responseDto.setEmail(saved.getEmail());
 
         return responseDto;
+    }
+
+    @Transactional
+    public User login(LoginUserRequestDto request) {
+        User user = userRepository.findByEmail(request.getEmail());
+        if (user == null) {
+            throw new RuntimeException("가입되어있지 않은 유저 입니다.");
+        }
+
+        if (BCrypt.checkpw(request.getPassword(), user.getPassword())) {
+            return user;
+        } else {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        }
     }
 
     @Transactional
