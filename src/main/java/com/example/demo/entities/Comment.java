@@ -2,10 +2,7 @@ package com.example.demo.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -14,7 +11,11 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false, length = 1000, name = "content")
     private String content;
 
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Long user_id;
+
 }

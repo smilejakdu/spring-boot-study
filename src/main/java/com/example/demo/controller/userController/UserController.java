@@ -1,12 +1,12 @@
 package com.example.demo.controller.userController;
 
-import com.example.demo.controller.userController.dto.UserRequestDto;
+import com.example.demo.controller.userController.dto.CreateUserDto.CreateUserRequestDto;
+import com.example.demo.controller.userController.dto.CreateUserDto.CreateUserResponseDto;
+import com.example.demo.entities.User;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/user")
@@ -15,7 +15,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/create")
-    public UserRequestDto createUser(@RequestBody CreateUserRequest request) {
+    public CreateUserResponseDto createUser(@RequestBody CreateUserRequestDto request) {
         return userService.createUser(request);
+    }
+
+    @GetMapping("/findUser")
+    public User getUser(@RequestParam Long id) throws ChangeSetPersister.NotFoundException {
+        return userService.getUser(id);
     }
 }

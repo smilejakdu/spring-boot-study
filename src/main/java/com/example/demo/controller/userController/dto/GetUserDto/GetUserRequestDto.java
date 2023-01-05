@@ -1,10 +1,11 @@
-package com.example.demo.controller.userController;
+package com.example.demo.controller.userController.dto.GetUserDto;
 
 import com.example.demo.shared.CheckValidity;
 import lombok.Data;
 
 @Data
-public class CreateUserRequest implements CheckValidity {
+public class GetUserRequestDto implements CheckValidity {
+
     private String name;
 
     @Override

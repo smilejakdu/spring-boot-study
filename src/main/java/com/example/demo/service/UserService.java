@@ -1,10 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.controller.userController.CreateUserRequest;
-import com.example.demo.controller.userController.dto.UserRequestDto;
+import com.example.demo.controller.userController.dto.CreateUserDto.CreateUserRequestDto;
+import com.example.demo.controller.userController.dto.CreateUserDto.CreateUserResponseDto;
 import com.example.demo.entities.User;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,15 +15,20 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public UserRequestDto createUser(CreateUserRequest request) {
+    public CreateUserResponseDto createUser(CreateUserRequestDto request) {
         User user = new User();
         user.setName(request.getName());
         User saved = userRepository.save(user);
 
-        UserRequestDto dto = new UserRequestDto();
-        dto.setId(saved.getId());
-        dto.setName(saved.getName());
+        CreateUserResponseDto responseDto = new CreateUserResponseDto();
+        responseDto.setId(saved.getId());
+        responseDto.setName(saved.getName());
 
-        return dto;
+        return responseDto;
+    }
+
+    @Transactional
+    public User getUser(Long id) throws ChangeSetPersister.NotFoundException {
+        return userRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
     }
 }
