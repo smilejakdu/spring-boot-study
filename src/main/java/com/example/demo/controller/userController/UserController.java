@@ -19,6 +19,16 @@ public class UserController {
         return userService.createUser(request);
     }
 
+    @PostMapping("/signup")
+    public CreateUserResponseDto signup(@RequestBody CreateUserRequestDto request) {
+        return userService.createUser(request);
+    }
+
+    @PostMapping("/login")
+    public User login(@RequestBody CreateUserRequestDto request) throws ChangeSetPersister.NotFoundException {
+        return userService.getUser(request.getId());
+    }
+
     @GetMapping("/findUser")
     public User getUser(@RequestParam Long id) throws ChangeSetPersister.NotFoundException {
         return userService.getUser(id);

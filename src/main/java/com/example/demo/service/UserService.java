@@ -6,6 +6,7 @@ import com.example.demo.entities.User;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,13 +17,23 @@ public class UserService {
 
     @Transactional
     public CreateUserResponseDto createUser(CreateUserRequestDto request) {
-        User user = new User();
-        user.setName(request.getName());
-        User saved = userRepository.save(user);
+//      유저를 찾는다. 없다면 에러를 뱉는다.
+        User user = userRepository.findByEmail(request.getEmail());
+        if (user != null) {
+            throw new RuntimeException("이미 가입되어있는 유저 입니다.");
+        }
+
+        User newUser = new User();
+        String password = request.getPassword();
+        String bctrptPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
+        newUser.setEmail(request.getEmail());
+        newUser.setPassword(bctrptPassword);
+        User saved = userRepository.save(newUser);
 
         CreateUserResponseDto responseDto = new CreateUserResponseDto();
         responseDto.setId(saved.getId());
-        responseDto.setName(saved.getName());
+        responseDto.setEmail(saved.getEmail());
 
         return responseDto;
     }

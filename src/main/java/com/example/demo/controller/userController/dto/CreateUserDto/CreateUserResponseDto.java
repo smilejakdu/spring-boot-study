@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class CreateUserResponseDto {
     private Long id;
-    private String name;
+    private String email;
 }
