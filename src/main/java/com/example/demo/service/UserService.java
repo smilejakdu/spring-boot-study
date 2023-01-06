@@ -40,15 +40,20 @@ public class UserService {
 
     @Transactional
     public User login(LoginUserRequestDto request) {
-        User user = userRepository.findByEmail(request.getEmail());
-        if (user == null) {
-            throw new RuntimeException("가입되어있지 않은 유저 입니다.");
-        }
+        try {
+            User user = userRepository.findByEmail(request.getEmail());
 
-        if (BCrypt.checkpw(request.getPassword(), user.getPassword())) {
-            return user;
-        } else {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            if (user == null) {
+                throw new RuntimeException("가입되어있지 않은 유저 입니다.");
+            }
+
+            if (BCrypt.checkpw(request.getPassword(), user.getPassword())) {
+                return user;
+            } else {
+                throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("가입되어있지 않은 유저 입니다.");
         }
     }
 
