@@ -1,9 +1,9 @@
 package com.example.demo.repository;
 
-import com.example.demo.entities.Comment;
+import com.example.demo.entities.Comments;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Long> {
+public interface CommentRepository extends JpaRepository<Comments, Long> {
 }

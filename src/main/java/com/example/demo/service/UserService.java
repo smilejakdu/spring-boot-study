@@ -19,6 +19,7 @@ public class UserService {
     @Transactional
     public CreateUserResponseDto createUser(CreateUserRequestDto request) {
         User user = userRepository.findByEmail(request.getEmail());
+
         if (user != null) {
             throw new RuntimeException("이미 가입되어있는 유저 입니다.");
         }
@@ -53,7 +54,7 @@ public class UserService {
                 throw new RuntimeException("비밀번호가 일치하지 않습니다.");
             }
         } catch (Exception e) {
-            throw new RuntimeException("가입되어있지 않은 유저 입니다.");
+            throw new RuntimeException("bad request");
         }
     }
 

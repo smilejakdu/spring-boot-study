@@ -12,7 +12,7 @@ public class CreateUserRequestDto implements CheckValidity {
     @Override
     public void check() {
         if(email == null || email.isEmpty()) {
-            throw new RuntimeException("Name is empty");
+            throw new RuntimeException("email is empty");
         }
     }
 }
