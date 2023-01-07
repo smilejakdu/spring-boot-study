@@ -3,6 +3,7 @@ package com.example.demo.controller.userController;
 import com.example.demo.controller.userController.dto.CreateUserDto.CreateUserRequestDto;
 import com.example.demo.controller.userController.dto.CreateUserDto.CreateUserResponseDto;
 import com.example.demo.controller.userController.dto.LoginUserDto.LoginUserRequestDto;
+import com.example.demo.controller.userController.dto.LoginUserDto.LoginUserResponseDto;
 import com.example.demo.entities.User;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public User login(@RequestBody LoginUserRequestDto request) throws ChangeSetPersister.NotFoundException {
+    public LoginUserResponseDto login(@RequestBody LoginUserRequestDto request) throws ChangeSetPersister.NotFoundException {
         return userService.login(request);
     }
 

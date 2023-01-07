@@ -1,6 +1,8 @@
 package com.example.demo.entities;
+
 import com.example.demo.shared.BaseTimeEntitiy;
 import lombok.Data;
+
 import javax.persistence.*;
 
 @Data

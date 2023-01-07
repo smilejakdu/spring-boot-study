@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.config.SecurityConfiguration;
 import com.example.demo.controller.userController.dto.CreateUserDto.CreateUserRequestDto;
 import com.example.demo.controller.userController.dto.CreateUserDto.CreateUserResponseDto;
 import com.example.demo.controller.userController.dto.LoginUserDto.LoginUserRequestDto;
+import com.example.demo.controller.userController.dto.LoginUserDto.LoginUserResponseDto;
 import com.example.demo.entities.User;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final SecurityConfiguration securityConfiguration;
 
     @Transactional
     public CreateUserResponseDto createUser(CreateUserRequestDto request) {
@@ -40,7 +43,7 @@ public class UserService {
     }
 
     @Transactional
-    public User login(LoginUserRequestDto request) {
+    public LoginUserResponseDto login(LoginUserRequestDto request) {
         try {
             User user = userRepository.findByEmail(request.getEmail());
 
@@ -49,7 +52,11 @@ public class UserService {
             }
 
             if (BCrypt.checkpw(request.getPassword(), user.getPassword())) {
-                return user;
+                String token = securityConfiguration.createToken(user.getEmail(), (2*1000*60));
+                LoginUserResponseDto responseDto = new LoginUserResponseDto();
+                responseDto.setEmail(user.getEmail());
+                responseDto.setToken(token);
+                return responseDto;
             } else {
                 throw new RuntimeException("비밀번호가 일치하지 않습니다.");
             }
