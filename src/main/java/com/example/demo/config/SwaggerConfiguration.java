@@ -30,8 +30,8 @@ public class SwaggerConfiguration {
     private ApiInfo apiInfo() {
 
         return new ApiInfoBuilder()
-                .title("결제 API 서비스")
-                .description("결제 API 서비스 입니다")
+                .title("API 서비스")
+                .description("API 서비스 입니다")
                 .version("1.0")
                 .license("LICENSE")
                 .licenseUrl("")
