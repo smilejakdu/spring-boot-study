@@ -3,6 +3,7 @@ package com.example.demo.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -13,8 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class SecurityConfiguration {
-    private static final String SECRET_KEY ="here_token";
+@RequiredArgsConstructor
+public class SecurityService {
+    private static final String SECRET_KEY ="dlfkajsdflkajsf;laskdjf;lasdkjfads;lkfjasd;lkfjasdfklasjdflaskjdhflsjadhf";
     private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
 
     private static Map<String, Object> createClaims(String email) {
@@ -34,7 +36,6 @@ public class SecurityConfiguration {
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         return Jwts.builder()
-                .setClaims(createClaims(subject))
                 .setSubject(subject)
                 .setExpiration(new Date(System.currentTimeMillis()+EXPIRATION_TIME))
                 .signWith(signingKey,signatureAlgorithm)

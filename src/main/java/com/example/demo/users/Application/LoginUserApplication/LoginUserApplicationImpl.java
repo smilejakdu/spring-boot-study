@@ -4,5 +4,5 @@ import com.example.demo.users.infrastructure.dto.LoginUserDto.LoginUserRequestDt
 import com.example.demo.users.infrastructure.dto.LoginUserDto.LoginUserResponseDto;
 
 public interface LoginUserApplicationImpl {
-    LoginUserResponseDto login(LoginUserRequestDto request);
+    String login(LoginUserRequestDto request);
 }

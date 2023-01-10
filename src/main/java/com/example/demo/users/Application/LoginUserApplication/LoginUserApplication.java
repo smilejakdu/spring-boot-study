@@ -1,6 +1,6 @@
 package com.example.demo.users.Application.LoginUserApplication;
 
-import com.example.demo.config.SecurityConfiguration;
+import com.example.demo.config.SecurityService;
 import com.example.demo.users.domain.User;
 import com.example.demo.users.infrastructure.dto.LoginUserDto.LoginUserRequestDto;
 import com.example.demo.users.infrastructure.dto.LoginUserDto.LoginUserResponseDto;
@@ -15,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginUserApplication implements LoginUserApplicationImpl {
 
     private final UserRepository userRepository;
-    private final SecurityConfiguration securityConfiguration;
-
     @Transactional
     @Override
-    public LoginUserResponseDto login(LoginUserRequestDto request) {
+    public String login(LoginUserRequestDto request) {
         try {
             User user = userRepository.findByEmail(request.getEmail());
 
@@ -28,12 +26,7 @@ public class LoginUserApplication implements LoginUserApplicationImpl {
             }
 
             if (BCrypt.checkpw(request.getPassword(), user.getPassword())) {
-                String token = securityConfiguration.createToken(user.getEmail());
-                System.out.println("token : " + token);
-                LoginUserResponseDto responseDto = new LoginUserResponseDto();
-                responseDto.setEmail(user.getEmail());
-                responseDto.setToken(token);
-                return responseDto;
+                return request.getEmail();
             } else {
                 throw new RuntimeException("비밀번호가 일치하지 않습니다.");
             }
