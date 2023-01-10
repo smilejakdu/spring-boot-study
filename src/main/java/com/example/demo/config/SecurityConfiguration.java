@@ -9,23 +9,35 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class SecurityConfiguration {
-    private static final String SECRET_KEY ="here token";
+    private static final String SECRET_KEY ="here_token";
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
 
-    public String createToken(String subjet, long expirationTime) {
-        if (expirationTime <= 0) {
+    private static Map<String, Object> createClaims(String email) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("email", email);
+        return claims;
+    }
+
+    public String createToken(String subject) {
+        System.out.println("createToken subject"+subject);
+        if (EXPIRATION_TIME <= 0) {
             throw new RuntimeException("Expiratio time must be greater than zero!");
         }
+
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-        byte[] secretKeyBytes = DatatypeConverter.parseBase64Binary(SECRET_KEY);
-        Key signingKey = new SecretKeySpec(secretKeyBytes, signatureAlgorithm.getJcaName());
+        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET_KEY);
+        Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         return Jwts.builder()
-                .setSubject(subjet)
-                .signWith(signingKey, signatureAlgorithm)
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .setClaims(createClaims(subject))
+                .setSubject(subject)
+                .setExpiration(new Date(System.currentTimeMillis()+EXPIRATION_TIME))
+                .signWith(signingKey,signatureAlgorithm)
                 .compact();
     }
 

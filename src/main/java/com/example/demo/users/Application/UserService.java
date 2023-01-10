@@ -1,11 +1,9 @@
 package com.example.demo.users.Application;
 
 import com.example.demo.config.SecurityConfiguration;
+import com.example.demo.users.domain.User;
 import com.example.demo.users.infrastructure.dto.CreateUserDto.CreateUserRequestDto;
 import com.example.demo.users.infrastructure.dto.CreateUserDto.CreateUserResponseDto;
-import com.example.demo.users.infrastructure.dto.LoginUserDto.LoginUserRequestDto;
-import com.example.demo.users.infrastructure.dto.LoginUserDto.LoginUserResponseDto;
-import com.example.demo.users.domain.User;
 import com.example.demo.users.infrastructure.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;

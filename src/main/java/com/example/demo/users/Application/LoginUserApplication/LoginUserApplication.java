@@ -28,7 +28,8 @@ public class LoginUserApplication implements LoginUserApplicationImpl {
             }
 
             if (BCrypt.checkpw(request.getPassword(), user.getPassword())) {
-                String token = securityConfiguration.createToken(user.getEmail(), (2*1000*60));
+                String token = securityConfiguration.createToken(user.getEmail());
+                System.out.println("token : " + token);
                 LoginUserResponseDto responseDto = new LoginUserResponseDto();
                 responseDto.setEmail(user.getEmail());
                 responseDto.setToken(token);

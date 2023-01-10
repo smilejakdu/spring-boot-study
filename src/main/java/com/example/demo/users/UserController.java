@@ -19,18 +19,14 @@ public class UserController {
     private final UserService userService;
     private final LoginUserApplication loginUserApplication;
 
-    @PostMapping("/create")
-    public CreateUserResponseDto createUser(@RequestBody CreateUserRequestDto request) {
-        return userService.createUser(request);
-    }
-
     @PostMapping("/signup")
     public CreateUserResponseDto signup(@RequestBody CreateUserRequestDto request) {
+        System.out.println("signup");
         return userService.createUser(request);
     }
 
     @PostMapping("/login")
-    public LoginUserResponseDto login(@RequestBody LoginUserRequestDto request) throws ChangeSetPersister.NotFoundException {
+    public LoginUserResponseDto login(@RequestBody LoginUserRequestDto request) {
         return loginUserApplication.login(request);
     }
 

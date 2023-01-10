@@ -14,5 +14,9 @@ public class CreateUserRequestDto implements CheckValidity {
         if(email == null || email.isEmpty()) {
             throw new RuntimeException("email is empty");
         }
+
+        if(password == null || password.isEmpty()) {
+            throw new RuntimeException("password is empty");
+        }
     }
 }
